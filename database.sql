@@ -22,3 +22,4 @@ CREATE USER snippet;
 GRANT SELECT, INSERT ON snippets TO snippet;
 ALTER USER snippet WITH PASSWORD 'snippet';
 
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO snippet;
