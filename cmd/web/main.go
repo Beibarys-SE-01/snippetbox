@@ -24,7 +24,7 @@ type application struct {
 
 func main() {
 	addr := flag.String("addr", ":4001", "HTTP network address")
-	dsn := flag.String("dsn", "postgres://postgres:123@localhost:5432/snippetbox", "PostgreSql data source name")
+	dsn := flag.String("dsn", "postgres://snippet:snippet@host.docker.internal:5433/snippetbox", "PostgreSql data source name")
 	secret := flag.String("secret", "s6Ndh+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Secret key")
 	flag.Parse()
 

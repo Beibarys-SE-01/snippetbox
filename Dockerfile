@@ -1,10 +1,18 @@
 FROM golang:1.15
-ADD . /app
+COPY . /app
 WORKDIR /app
-RUN go build -o snippetbox cmd/web/*
-ENTRYPOINT /app/snippetbox
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
+RUN go build /app/cmd/web
+ENTRYPOINT ["./web"]
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
-WORKDIR /app/
-COPY --from=0 /app/snippetbox .
-CMD ["./snippetbox"]
+WORKDIR /root/
+COPY --from=0 /app .
+CMD ["./web"]
+EXPOSE 4001

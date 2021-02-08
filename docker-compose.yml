@@ -1,0 +1,24 @@
+version: "3"
+services:
+  snippetbox:
+    restart: always
+    environment:
+      CONN: "postgresql://host.docker.internal/snippetbox?user=postgres&password=postgres"
+    depends_on:
+      - snippetboxdb
+    ports:
+      - "4001:4001"
+    build:
+      dockerfile: Dockerfile
+      context: .
+  snippetboxdb:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: snippetbox
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
